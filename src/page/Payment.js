@@ -54,12 +54,12 @@ const PaymentTest = () => {
 
   const cancelPayment = async () => {
     window.location.replace(
-      `${process.env.REACT_APP_SERVER_URL}/payments/payCancel?tid=${order.tid}&ordNo=${order.ordNo}&canAmt=${order.goodsAmt}&ediDate=${order.ediDate}`
+      `${process.env.REACT_APP_SERVER_URL}/payments/payCancel?tid=${order.tid}&ordNo=${order.ordNo}&canAmt=${order.amt}&ediDate=${order.ediDate}`
     );
   };
 
   return (
-    <>
+    <div style={{ padding: 16 }}>
       <Row gutter={[16, 16]}>
         <Col span={12}>
           <Space direction="vertical" style={{ width: "100%" }}>
@@ -102,7 +102,7 @@ const PaymentTest = () => {
           </Space>
         </Col>
       </Row>
-    </>
+    </div>
   );
 };
 
