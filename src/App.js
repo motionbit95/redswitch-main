@@ -1,11 +1,17 @@
-import logo from "./logo.svg";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
-import PaymentPage from "./component/Payment";
+import PaymentTest from "./component/Payment";
+import PaymentResult from "./component/PaymentResult";
 
 function App() {
   return (
     <div className="App">
-      <PaymentPage />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/payment" element={<PaymentTest />} />
+          <Route path="/payment/result" element={<PaymentResult />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
