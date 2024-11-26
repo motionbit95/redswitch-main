@@ -4,7 +4,8 @@ import PaymentTest from "./page/Payment";
 import PaymentResult from "./page/PaymentResult";
 import MainPage from "./page/MainPage";
 import { useEffect, useState } from "react";
-import { ConfigProvider } from "antd";
+import { ConfigProvider, FloatButton, Row, Space, Typography } from "antd";
+import { Footer } from "./component/Footer";
 
 const darkTheme = {
   components: {
@@ -62,7 +63,7 @@ const darkTheme = {
       colorBorder: "#595959",
     },
     Card: {
-      colorBgContainer: "#2a2a2a",
+      colorBgContainer: "#3a3a3a",
       colorText: "#e6e6e6",
       colorBorder: "#595959",
       colorBorderSecondary: "#4a4a4a",
@@ -141,43 +142,73 @@ function App() {
   return (
     <ConfigProvider theme={theme === "dark" ? darkTheme : lightTheme}>
       {theme === "dark" && (
-        <style>
-          {`
-          .ant-input::placeholder {
-            color: #999999; // 원하는 색상으로 변경
-          }
-
-          .ant-input-search {
-            border-color: #595959; /* 버튼 테두리 색상 */
-          }
-          
-          .ant-input-search-button {
-            border-color: #595959; /* 버튼 테두리 색상 */
-            background-color: #2a2a2a; /* 버튼 배경 색상 */
-          }
-
-          .ant-input-search-button:hover {
-            background-color: #444444; /* 버튼 hover 색상 */
-          }
-
-          .ant-btn-icon {
-            color: #d9d9d9; /* 이모지 색상 */
-          }
-        }
-        `}
-        </style>
+        <style>{`body { background-color: ${
+          theme === "dark" ? "#2e2e2e" : "#fcfcfc"
+        } }`}</style>
       )}
       <div
         style={{
           backgroundColor: theme === "dark" ? "#2e2e2e" : "#fcfcfc",
           minWidth: "300px",
-          maxWidth: "480px",
+          maxWidth: "800px",
           margin: "0 auto",
         }}
       >
+        <Row>
+          <FloatButton.Group shape="circle">
+            <FloatButton />
+            <FloatButton.BackTop visibilityHeight={0} />
+          </FloatButton.Group>
+
+          {/* Main Content Section */}
+          <div
+            style={{
+              width: "100%",
+              padding: "10px 10px 10px 10px",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Space
+              direction="horizontal"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <img
+                src={require("./asset/redswitchLogo.png")}
+                alt={"logo"}
+                style={{
+                  width: "32px",
+                  height: "32px",
+                  objectFit: "cover",
+                }}
+              />
+              <Typography.Text style={{ fontSize: "10px", fontWeight: "bold" }}>
+                REDSWITCH
+              </Typography.Text>
+            </Space>
+
+            <Typography.Text
+              style={{
+                fontSize: "14px",
+                fontWeight: "bold",
+                marginBottom: "10px",
+              }}
+            >
+              비대면 어덜트토이 플랫폼
+            </Typography.Text>
+          </div>
+        </Row>
         <BrowserRouter>
           <Routes>
-            <Route path="/spot/*" element={<MainPage branch={branch} />} />
+            <Route
+              path="/spot/*"
+              element={<MainPage branch={branch} theme={theme} />}
+            />
             <Route path="/payment" element={<PaymentTest />} />
             <Route
               path="/payment/result"
@@ -186,6 +217,7 @@ function App() {
           </Routes>
         </BrowserRouter>
       </div>
+      <Footer theme={theme} />
     </ConfigProvider>
   );
 }

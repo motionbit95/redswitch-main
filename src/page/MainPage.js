@@ -13,6 +13,7 @@ import React, { useEffect, useState } from "react";
 import { EnvironmentOutlined, WhatsAppOutlined } from "@ant-design/icons";
 import TabPane from "antd/es/tabs/TabPane";
 import ProductListPage from "./ProductListPage";
+import { useMediaQuery } from "react-responsive";
 
 const { Search } = Input;
 
@@ -20,6 +21,8 @@ function MainPage(props) {
   const { branch } = props;
   const [branchInfo, setBranchInfo] = useState(null);
   const [selectedItemId, setSelectedItemId] = useState(null);
+
+  const isLarge = useMediaQuery({ minWidth: 1024 });
 
   // 임의 데이터
   const categories = ["Category 1", "Category 2", "Category 3", "Category 4"];
@@ -54,76 +57,34 @@ function MainPage(props) {
     <div>
       {branchInfo ? (
         <>
-          <Row>
-            <FloatButton.Group shape="circle">
-              <FloatButton />
-              <FloatButton.BackTop visibilityHeight={0} />
-            </FloatButton.Group>
-
-            {/* Main Content Section */}
-            <div
-              style={{
-                width: "100%",
-                padding: "10px 10px 10px 10px",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Space
-                direction="horizontal"
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                }}
-              >
-                <img
-                  src={require("../asset/redswitchLogo.png")}
-                  alt={"logo"}
-                  style={{
-                    width: "32px",
-                    height: "32px",
-                    objectFit: "cover",
-                  }}
-                />
-                <Typography.Text
-                  style={{ fontSize: "10px", fontWeight: "bold" }}
-                >
-                  REDSWITCH
-                </Typography.Text>
-              </Space>
-
-              <Typography.Text
-                style={{
-                  fontSize: "14px",
-                  fontWeight: "bold",
-                  marginBottom: "10px",
-                }}
-              >
-                비대면 어덜트토이 플랫폼
-              </Typography.Text>
-            </div>
-          </Row>
-
           {/* Carousel - now below the logo */}
-          <Carousel
-            autoplay
-            effect="fade"
-            dotPosition="bottom"
-            style={{ marginBottom: "10px" }}
-          >
-            <img
-              src={require("../asset/bdsm_banner.png")}
-              alt={"banner1"}
-              style={{ width: "100%", height: "auto" }}
-            />
-            <img
-              src={require("../asset/cert_banner.png")}
-              alt={"banner2"}
-              style={{ width: "100%", height: "auto" }}
-            />
-          </Carousel>
+          {!isLarge ? (
+            <Carousel autoplay effect="fade">
+              <img
+                src={require("../asset/bdsm_banner.png")}
+                alt={"banner1"}
+                style={{ width: "100%", height: "auto" }}
+              />
+              <img
+                src={require("../asset/cert_banner.png")}
+                alt={"banner2"}
+                style={{ width: "100%", height: "auto" }}
+              />
+            </Carousel>
+          ) : (
+            <Space size={"large"} style={{ marginBottom: "10px" }}>
+              <img
+                src={require("../asset/bdsm_banner.png")}
+                alt={"banner1"}
+                style={{ width: "100%", height: "auto" }}
+              />
+              <img
+                src={require("../asset/cert_banner.png")}
+                alt={"banner2"}
+                style={{ width: "100%", height: "auto" }}
+              />
+            </Space>
+          )}
 
           {/* Branch Info Card */}
           <Row
@@ -133,7 +94,7 @@ function MainPage(props) {
             <Card
               style={{
                 width: "100%",
-                boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.1)",
+                // boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.1)",
               }}
             >
               <Typography.Text
@@ -154,7 +115,7 @@ function MainPage(props) {
             </Card>
           </Row>
 
-          <ProductListPage />
+          <ProductListPage theme={props.theme} branch={branchInfo} />
         </>
       ) : (
         <Empty
